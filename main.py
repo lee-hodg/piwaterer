@@ -1,4 +1,5 @@
 import time
+import BlynkLib
 import urequests
 from machine import Pin, I2C, ADC, WDT
 from env import WIFI_SSID, WIFI_PASS, API_HOST, BLYNK_AUTH
@@ -81,10 +82,24 @@ def main():
     # Connect to WiFi
     wlan = connect_wifi()
 
+    blynk = BlynkLib.Blynk(BLYNK_AUTH)
+
+    @blynk.on("connected")
+    def blynk_connected(ping):
+        print('Blynk ready. Ping:', ping, 'ms')
+
+    @blynk.on("disconnected")
+    def blynk_disconnected():
+        print('Blynk disconnected')
+
+
     # Infinite loop to keep checking moisture
     while True:
         # Ensure hardware watchdog is fed
         wdt.feed()
+
+        blynk.run()
+
         if not wlan.isconnected():
             wlan.connect()
             print('Reconnecting to WiFi...')
@@ -96,6 +111,9 @@ def main():
         lcd.putstr(f"moisture: {val:.2f}")
 
         log_to_api(val)
+        
+        # write to virtual pin 0
+        blynk.virtual_write(0, val)
 
         # if val > THRESHOLD:
         #     pump_on()
