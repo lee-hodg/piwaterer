@@ -1,7 +1,7 @@
 import time
 import urequests
 from machine import Pin, I2C, ADC, WDT
-from .env import WIFI_SSID, WIFI_PASSWORD, API_HOST, BLYNK_AUTH
+from env import WIFI_SSID, WIFI_PASS, API_HOST, BLYNK_AUTH
 from i2c_lcd import I2cLcd
 
 
@@ -65,7 +65,7 @@ def connect_wifi():
 
     station = network.WLAN(network.STA_IF)
     station.active(True)
-    station.connect(WIFI_SSID, WIFI_PASSWORD)
+    station.connect(WIFI_SSID, WIFI_PASS)
 
     while not station.isconnected():
         print('Connecting to WiFi...')
