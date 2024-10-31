@@ -92,6 +92,14 @@ def main():
     def blynk_disconnected():
         print('Blynk disconnected')
 
+    @blynk.on("V1")  # Assuming the button is on virtual pin V1
+    def v1_write_handler(value):
+        if int(value[0]) == 1:
+            pump_on()
+            time.sleep(5)
+            pump_off()
+        else:
+            pump_off()
 
     # Infinite loop to keep checking moisture
     while True:
@@ -111,7 +119,7 @@ def main():
         lcd.putstr(f"moisture: {val:.2f}")
 
         log_to_api(val)
-        
+
         # write to virtual pin 0
         blynk.virtual_write(0, val)
 
