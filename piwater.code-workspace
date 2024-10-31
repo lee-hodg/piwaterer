@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "piwater",
+			"path": "."
+		},
+		{
+			"name": "serial://dev/tty.SLAB_USBtoUART",
+			"uri": "serial:///dev/tty.slab_usbtouart/"
+		},
+		{
+			"name": "serial://dev/tty.SLAB_USBtoUART",
+			"uri": "serial:///dev/tty.slab_usbtouart/"
+		}
+	]
+}
